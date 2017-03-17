@@ -163,5 +163,5 @@ gradle-app.setting
 # End of https://www.gitignore.io/api/gradle,maven,java,code-java,emacs,jetbrains
 
 # User Defined
-demo.iml
+*.iml
 .idea/

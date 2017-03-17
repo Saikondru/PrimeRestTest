@@ -24,14 +24,16 @@ public class PrimeControllerIntegrationTest {
     public void testPrimesDefaultEndPoint() throws Exception {
         this.mvc.perform(get("/primes/").accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(content().string("[2,3,5,7]"));
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
+                .andExpect(content().json("{\"limit\":10,\"primes\":[2,3,5,7]}"));
     }
 
     @Test
     public void testPrimesEndPointWithLimit() throws Exception {
         this.mvc.perform(get("/primes/20").accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(content().string("[2,3,5,7,11,13,17,19]"));
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
+                .andExpect(content().json("{\"limit\":20,\"primes\":[2,3,5,7,11,13,17,19]}"));
     }
 
 }
