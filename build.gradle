@@ -6,7 +6,7 @@ plugins {
     id 'jacoco'
 }
 
-group = 'com.rbs.prime'
+group = 'com.github.warfox.prime'
 version = '0.0.1-SNAPSHOT'
 
 description = """prime-rest"""
@@ -52,8 +52,9 @@ dependencies {
     compile("org.springframework.boot:spring-boot-starter-web") {
         exclude module: "spring-boot-starter-tomcat"
     }
-    compile("javax.inject:javax.inject:1")
     compile("org.springframework.boot:spring-boot-starter-jetty")
+    compile("org.springframework.boot:spring-boot-starter-thymeleaf")
+    compile("javax.inject:javax.inject:1")
     testCompile(group: 'org.springframework.boot', name: 'spring-boot-starter-test', version: '1.5.2.RELEASE') {
         exclude(module: 'commons-logging')
     }

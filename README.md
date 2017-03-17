@@ -19,3 +19,23 @@ Code coverage will be available at  `build/reports/jacoco/test/html/index.html`
 ```
 
 Build is available at `build/libs/prime-rest-0.0.1-SNAPSHOT.jar`
+
+## Run
+
+```
+java -jar build/libs/prime-rest-0.0.1-SNAPSHOT.jar
+```
+
+
+## Wercker commands
+
+* Dev
+```
+wercker dev --publish 8080
+```
+Above command will run the application in a docker container setup by wercker
+
+* Build
+```
+wercker build
+```
