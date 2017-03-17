@@ -1,4 +1,4 @@
-# Created by https://www.gitignore.io/api/gradle,maven,java,code-java,emacs,jetbrains
+# Created by https://www.gitignore.io/api/gradle,maven,java,code-java,emacs,jetbrains,werckercli
 
 ### Code-Java ###
 # Language Support for Java(TM) by Red Hat extension for Visual Studio Code - https://marketplace.visualstudio.com/items?itemName=redhat.java
@@ -159,6 +159,13 @@ gradle-app.setting
 
 # # Work around https://youtrack.jetbrains.com/issue/IDEA-116898
 # gradle/wrapper/gradle-wrapper.properties
+
+### WerckerCLI ###
+_steps
+_builds
+_cache
+_projects
+.wercker
 
 # End of https://www.gitignore.io/api/gradle,maven,java,code-java,emacs,jetbrains
 
