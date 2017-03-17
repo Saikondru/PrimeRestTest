@@ -2,6 +2,10 @@
 
 [![wercker status](https://app.wercker.com/status/b0a50c914a0d1575a3f63ef1869b32e7/s/master "wercker status")](https://app.wercker.com/project/byKey/b0a50c914a0d1575a3f63ef1869b32e7)
 
+## Deployed to
+
+https://prime-rest-java.herokuapp.com/
+
 ## Test with reports
 ```
 ./gradlew clean test jacocoTestReport
