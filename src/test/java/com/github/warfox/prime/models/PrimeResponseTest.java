@@ -1,4 +1,4 @@
-package com.rbs.prime.models;
+package com.github.warfox.prime.models;
 
 import org.junit.Test;
 

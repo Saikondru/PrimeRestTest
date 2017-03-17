@@ -1,4 +1,4 @@
-package com.rbs.prime.controllers;
+package com.github.warfox.prime.controllers;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;

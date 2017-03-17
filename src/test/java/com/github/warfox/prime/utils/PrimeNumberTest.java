@@ -1,4 +1,4 @@
-package com.rbs.prime;
+package com.github.warfox.prime.utils;
 
 import org.junit.Test;
 

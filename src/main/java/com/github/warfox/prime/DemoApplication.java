@@ -1,4 +1,4 @@
-package com.rbs.prime;
+package com.github.warfox.prime;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

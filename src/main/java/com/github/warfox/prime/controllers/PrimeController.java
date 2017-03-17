@@ -1,7 +1,7 @@
-package com.rbs.prime.controllers;
+package com.github.warfox.prime.controllers;
 
-import com.rbs.prime.PrimeNumber;
-import com.rbs.prime.models.PrimeResponse;
+import com.github.warfox.prime.models.PrimeResponse;
+import com.github.warfox.prime.utils.PrimeNumber;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,6 +20,5 @@ public class PrimeController {
     public PrimeResponse list(@PathVariable int limit) {
         return new PrimeResponse(limit, PrimeNumber.primeNumbers(limit));
     }
-
 
 }

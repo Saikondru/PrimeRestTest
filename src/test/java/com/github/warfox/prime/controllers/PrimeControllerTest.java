@@ -1,6 +1,6 @@
-package com.rbs.prime.controllers;
+package com.github.warfox.prime.controllers;
 
-import com.rbs.prime.models.PrimeResponse;
+import com.github.warfox.prime.models.PrimeResponse;
 import org.junit.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
