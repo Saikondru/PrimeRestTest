@@ -21,11 +21,17 @@ public class PrimeControllerIntegrationTest {
     private MockMvc mvc;
 
     @Test
-    public void testPrimesEndPoint() throws Exception {
-        this.mvc.perform(get("/primes/")
-                .accept(MediaType.APPLICATION_JSON))
+    public void testPrimesDefaultEndPoint() throws Exception {
+        this.mvc.perform(get("/primes/").accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(content().string("[2,3,5,7]"));
+    }
+
+    @Test
+    public void testPrimesEndPointWithLimit() throws Exception {
+        this.mvc.perform(get("/primes/20").accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(content().string("[2,3,5,7,11,13,17,19]"));
     }
 
 }
