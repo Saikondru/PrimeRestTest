@@ -15,14 +15,22 @@ public class PrimeNumber {
         return primes;
     }
 
-    public static boolean isPrime(int i) {
-        int counter = 0;
-        for (int num = i - 1; num >= 1; num--) {
-            if (i % num == 0) {
-                counter++;
-            }
+    public static boolean isPrime(int num) {
+        if (num <= 1) {
+            return false;
+        } else if (num <= 3) {
+            return true;
+        } else if (num % 2 == 0 || num % 3 == 0) {
+            return false;
         }
-        return (counter == 1);
+
+        int i = 5;
+        while (i * i <= num) {
+            if (num % i == 0 || num % (i + 2) == 0)
+                return false;
+            i = i + 6;
+        }
+        return true;
     }
 
 }
