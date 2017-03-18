@@ -18,7 +18,12 @@ public class PrimeResponseTest {
     public void testGetPrimes() throws Exception {
         PrimeResponse primeResponse = new PrimeResponse(1, Arrays.asList(1, 2, 3, 4));
         assertThat(primeResponse.getLimit()).isEqualTo(1);
-        assertThat(primeResponse.getPrimes()).containsExactly(1,2,3,4);
+        assertThat(primeResponse.getPrimes()).containsExactly(1, 2, 3, 4);
+    }
+
+    @Test
+    public void testNoArgPublicConstructor() throws Exception {
+        new PrimeResponse();
     }
 
 }

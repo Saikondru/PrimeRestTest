@@ -13,6 +13,11 @@ https://prime-rest-java.herokuapp.com/
 
 Code coverage will be available at  `build/reports/jacoco/test/html/index.html`
 
+## IntegrationTests
+```
+./gradlew clean integrationTest
+```
+
 ## Build
 ```
 ./gradlew build
@@ -26,7 +31,6 @@ Build is available at `build/libs/prime-rest-0.0.1-SNAPSHOT.jar`
 java -jar build/libs/prime-rest-0.0.1-SNAPSHOT.jar
 ```
 
-
 ## Wercker commands
 
 * Dev
@@ -39,3 +43,12 @@ Above command will run the application in a docker container setup by wercker
 ```
 wercker build
 ```
+
+## Content Negotiation
+
+- PathExtension - *.xml and *.json
+- Url parameter - mediaType=xml and mediaType=json
+- Accept header
+    - application/xml
+    - application/json
+
