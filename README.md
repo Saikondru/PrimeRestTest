@@ -13,7 +13,8 @@ https://prime-rest-java.herokuapp.com/
 ./gradlew clean test jacocoTestReport
 ```
 
-Code coverage will be available at  `build/reports/jacoco/test/html/index.html`
+Code coverage will be available at  `build/reports/jacoco/test/html/index.html`.
+Now we have `99%` code coverage.
 
 ## IntegrationTests
 ```

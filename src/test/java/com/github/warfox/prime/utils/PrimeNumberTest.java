@@ -53,4 +53,15 @@ public class PrimeNumberTest {
         assertThat(PrimeNumber.isPrime(-7)).isFalse();
     }
 
+    @Test
+    public void testPrimeNumbersListEmptyForZero() throws Exception {
+        assertThat(PrimeNumber.primeNumbers(0)).isEmpty();
+    }
+
+    @Test
+    public void testPrimeNumbersListEmptyForNegativeNumbers() throws Exception {
+        assertThat(PrimeNumber.primeNumbers(-1)).isEmpty();
+        assertThat(PrimeNumber.primeNumbers(-2)).isEmpty();
+    }
+
 }
