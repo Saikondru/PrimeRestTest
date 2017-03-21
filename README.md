@@ -52,3 +52,11 @@ wercker build
     - application/xml
     - application/json
 
+## Http Caching
+- Prime numbers are can be cached at http level
+- Cache-Control max-age set to high value (1 year)
+- ETag filter enabled to check if document in modified
+
+## Performance Optimazation
+- Memoization technique applied for performance optimization
+- Known primes are collected in memory to avoid recalculation of primality

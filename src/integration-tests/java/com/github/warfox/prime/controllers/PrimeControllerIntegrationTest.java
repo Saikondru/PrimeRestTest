@@ -16,8 +16,7 @@ import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @AutoConfigureMockMvc
 @RunWith(SpringRunner.class)
@@ -112,6 +111,18 @@ public class PrimeControllerIntegrationTest {
                 .exchange("/primes/20", HttpMethod.GET, new HttpEntity<>(headers), PrimeResponse.class);
         assertThat(exchange.getBody().getLimit()).isEqualTo(20);
         assertThat(exchange.getBody().getPrimes()).containsExactly(2, 3, 5, 7, 11, 13, 17, 19);
+    }
+
+    @Test
+    public void testCacheControlHeadersMustBeSet() throws Exception {
+        mockMvc.perform(get("/primes"))
+                .andExpect(header().string("Cache-Control", "max-age=31536000"));
+    }
+
+    @Test
+    public void testETagHeader() throws Exception {
+        mockMvc.perform(get("/primes"))
+                .andExpect(header().string("ETag", "\"005ac9c4b7a0623691dabe61f78e26f8e\""));
     }
 
 }
