@@ -6,6 +6,10 @@ import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement;
 
 import java.util.List;
 
+/**
+ * Response wrapper object, that can be serialized
+ * and deserialized to/from xml and json
+ */
 @JacksonXmlRootElement(localName = "prime-response")
 public class PrimeResponse {
 
@@ -13,9 +17,9 @@ public class PrimeResponse {
 
     @JacksonXmlElementWrapper(localName = "primes")
     @JacksonXmlProperty(localName = "prime")
-    private List<Number> primes;
+    private List<Integer> primes;
 
-    public PrimeResponse(long limit, List<Number> primes) {
+    public PrimeResponse(long limit, List<Integer> primes) {
         this.limit = limit;
         this.primes = primes;
     }
@@ -27,7 +31,7 @@ public class PrimeResponse {
         return limit;
     }
 
-    public List<Number> getPrimes() {
+    public List<Integer> getPrimes() {
         return primes;
     }
 

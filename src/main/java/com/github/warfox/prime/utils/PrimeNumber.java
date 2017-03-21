@@ -6,13 +6,24 @@ import java.util.List;
 
 public class PrimeNumber {
 
-    // memoization to avoid re-calculation of already known primes
-    // initialized with first 10 prime numbers for optimization
+    /**
+     * memoization to avoid re-calculation of already known primes
+     * initialized with first 10 prime numbers for optimization
+     */
     private static List<Number> PRIMES = new ArrayList<>(Arrays.asList(2, 3, 5, 7, 11, 13, 17, 19, 23, 29));
 
-    public static List<Number> primeNumbers(int number) {
-        List<Number> primes = new ArrayList<>();
-        for (int i = 2; i <= number; i++) {
+    /**
+     * For performance optimization this method skips all even numbers
+     * 2 is the only even prime number
+     * @param number
+     * @return - a list of prime numbers till and including number
+     */
+    public static List<Integer> primeNumbers(int number) {
+        List<Integer> primes = new ArrayList<>();
+        if (number > 1) {
+            primes.add(2);
+        }
+        for (int i = 3; i <= number; i += 2) {
             if (isPrime(i)) {
                 primes.add(i);
             }
@@ -20,7 +31,14 @@ public class PrimeNumber {
         return primes;
     }
 
+    /**
+     * Returns true if a given number is Prime
+     *
+     * @param num - number to be tested for primality
+     * @return - true if num is prime, else false
+     */
     public static boolean isPrime(int num) {
+        // early return for obvious conditions
         if (num <= 1) {
             return false;
         } else if (PRIMES.contains(num)) {

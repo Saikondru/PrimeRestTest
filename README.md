@@ -57,6 +57,11 @@ wercker build
 - Cache-Control max-age set to high value (1 year)
 - ETag filter enabled to check if document in modified
 
-## Performance Optimazation
+## Performance Optimization
 - Memoization technique applied for performance optimization
 - Known primes are collected in memory to avoid recalculation of primality
+- Even numbers are skipped from primality check, as 2 is the only even prime number
+
+## Limitations
+- At the moment this can only give list of prime numbers till 2147483647,
+ which is max limit of int type
