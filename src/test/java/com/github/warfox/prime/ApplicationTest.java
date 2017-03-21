@@ -17,11 +17,17 @@ import static org.mockito.Mockito.when;
 public class ApplicationTest {
 
     @Test
-    public void testMain() throws Exception {
+    public void testCanCreateNewInstance() throws Exception {
+        new Application();
+    }
+
+    @Test
+    public void testMainInvokesSpringApplicationRun() throws Exception {
         PowerMockito.mockStatic(SpringApplication.class);
         ConfigurableApplicationContext context = mock(ConfigurableApplicationContext.class);
-        String[] args = {""};
+        String[] args = {"arg1", "arg2"};
         when(SpringApplication.run(Application.class, args)).thenReturn(context);
+
         Application.main(args);
         PowerMockito.verifyStatic(Mockito.times(1));
         SpringApplication.run(Application.class, args);
