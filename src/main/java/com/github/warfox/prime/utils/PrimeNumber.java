@@ -15,6 +15,7 @@ public class PrimeNumber {
     /**
      * For performance optimization this method skips all even numbers
      * 2 is the only even prime number
+     *
      * @param number
      * @return - a list of prime numbers till and including number
      */

@@ -22,13 +22,13 @@ public class PrimeController {
         this.primeNumberService = primeNumberService;
     }
 
-    @RequestMapping(value = "/primes")
+    @RequestMapping(value = "/primes", produces = {"application/json", "application/xml"})
     @ResponseBody
     public PrimeResponse list() {
         return list(10);
     }
 
-    @RequestMapping(value = "/primes/{limit}")
+    @RequestMapping(value = "/primes/{limit}", produces = {"application/json", "application/xml"})
     @ResponseBody
     public PrimeResponse list(@PathVariable int limit) {
         return primeNumberService.list(limit);
