@@ -17,7 +17,12 @@ build:
     - script:
         name: run gradle
         code: |
-          ./gradlew --full-stacktrace -q --project-cache-dir=$WERCKER_CACHE_DIR build
+          ./gradlew --full-stacktrace -q --project-cache-dir=$WERCKER_CACHE_DIR build jacocoTestReport
+  after-steps:
+    - script:
+        name: publish coverage report
+        code:
+          bash <(curl -s https://codecov.io/bash) -t $CODECOV_TOKEN
 
 deploy:
   steps:

@@ -2,6 +2,9 @@
 
 [![wercker status](https://app.wercker.com/status/b0a50c914a0d1575a3f63ef1869b32e7/s/master "wercker status")](https://app.wercker.com/project/byKey/b0a50c914a0d1575a3f63ef1869b32e7)
 
+[![codecov](https://codecov.io/gh/WarFox/prime-rest-java/branch/master/graph/badge.svg)](https://codecov.io/gh/WarFox/prime-rest-java)
+
+
 ## Deployed to
 
 https://prime-rest-java.herokuapp.com/
