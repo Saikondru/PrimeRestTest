@@ -6,6 +6,7 @@
 .project
 .classpath
 factoryConfiguration.json
+.settings/
 
 ### Emacs ###
 # -*- mode: gitignore; -*-
@@ -173,3 +174,4 @@ _projects
 *.iml
 .idea/
 .meghanada/
+/bin/
