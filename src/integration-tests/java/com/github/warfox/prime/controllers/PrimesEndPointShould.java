@@ -36,7 +36,7 @@ public class PrimesEndPointShould {
         
         builder.expectContentType(ContentType.JSON);
         
-       jsonResponseSpec = builder.build();
+        jsonResponseSpec = builder.build();
     }
 	
   /* For Code re usability to check xml content type, Cache control header and status code */
@@ -52,12 +52,12 @@ public class PrimesEndPointShould {
         
         builder.expectContentType(ContentType.XML);
         
-       xmlResponseSpec = builder.build();
+        xmlResponseSpec = builder.build();
     }
 	
 	/*  Testing the default limit as 10  */
 
-	@Test
+    @Test
 	public void returnsPrimeNumbersBelow10ByDefault() {
 		when().
 		  get("/primes").
@@ -146,7 +146,7 @@ public class PrimesEndPointShould {
 	
 	/*  Testing the response with header as JSON  */
 
-	//@Test
+	@Test
 	public void returnsPrimeNumbersInJsonForJsonHeader() {
 		given().
 		  header("Accept", "application/json").
@@ -488,20 +488,56 @@ public class PrimesEndPointShould {
 
 	}
 	
+	/* Testing for some big responses 10000 */
+	
+	@Test
+	public void returnBigResponseTenThousand() {
+		when().
+		  get("/primes/10000").
+		then().
+		  spec(jsonResponseSpec);
+					
+	}
+	
+   /* Testing for some big responses 20000 */
+	
+	@Test
+	public void returnBigResponseTwentyThousand() {
+		when().
+		  get("/primes/20000").
+		then().
+		  spec(jsonResponseSpec);
+					
+	}
+	
+	/* Testing response for maximum limit */
+	
+	/* This test is commented as it will timeout and abort */
+	
+	//@Test
+	public void returnsErrorForMaximumLimit() {
+		when().
+		  get("/primes/2147483647").
+		then().
+		  contentType(ContentType.JSON).
+		  statusCode(200);
+				
+	}   
+	
 	/* Negative Scenarios as follows */
 	
 	/* Testing response with invalid header */
 	
-	   @Test
-		public void returnsErrorForInvalidHeader() {
-			given().
-			  header("Accept", "application/invalid").
-			when().
-		      get("/primes").		   
-			then().
-			  statusCode(406).
-			  header("Cache-Control", "must-revalidate,no-cache,no-store").
-              header("Content-Length", "0");
+    @Test
+	public void returnsErrorForInvalidHeader() {
+		given().
+		  header("Accept", "application/invalid").
+		when().
+		  get("/primes").		   
+		then().
+		  statusCode(406).
+		  header("Cache-Control", "must-revalidate,no-cache,no-store").
+          header("Content-Length", "0");
 						  
 		}
 	    
@@ -557,20 +593,8 @@ public class PrimesEndPointShould {
 			
 		}   
 		
-				
-     /* Testing response for maximum limit */
-		
-		/* This test is commented as it will timeout and abort */
-		
-		//@Test
-		public void returnsErrorForMaximumLimit() {
-			when().
-			  get("/primes/2147483647").
-			then().
-			  contentType(ContentType.JSON).
-			  statusCode(200);
-					
-		}   
+						
+    
 		
 		
  }
