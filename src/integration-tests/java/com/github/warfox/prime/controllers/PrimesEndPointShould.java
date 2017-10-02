@@ -17,10 +17,10 @@ public class PrimesEndPointShould {
 	
 	/* Setting the base uri as local host */
 	
-	@BeforeClass
-	  public static void setBaseUri () {
+    @BeforeClass
+	public static void setBaseUri () {
 
-	    RestAssured.baseURI = "http://localhost:8080";
+    	RestAssured.baseURI = "http://localhost:8080";
 	  }
 	
 	/* For Code re usability to check json content type, Cache control header and status code */
