@@ -543,58 +543,55 @@ public class PrimesEndPointShould {
 	    
 	 /* Testing response with invalid media type */
 		
-		@Test
-		public void returnsErrorForInvalidMediaType() {
-			given().
-			  param("mediaType", "invalid").
-			when().
-			  get("/primes").
-			then().
-			  contentType(ContentType.HTML).
-			  header("Cache-Control", "must-revalidate,no-cache,no-store").
-			  statusCode(406).
-			and().
-			  assertThat().
-			  body(containsString("Error 406 Not Acceptable")).
-			  body(containsString("HTTP ERROR 406"));
+    @Test
+	public void returnsErrorForInvalidMediaType() {
+		given().
+		  param("mediaType", "invalid").
+	    when().
+		  get("/primes").
+		then().
+		  contentType(ContentType.HTML).
+		  header("Cache-Control", "must-revalidate,no-cache,no-store").
+		  statusCode(406).
+		and().
+		  assertThat().
+		  body(containsString("Error 406 Not Acceptable")).
+		  body(containsString("HTTP ERROR 406"));
 			  
 			
 		}
 		
     /* Testing response with invalid limit as ten instead of 10 */
 		
-		@Test
-		public void returnsErrorForInvalidLimit() {
-			when().
-			  get("/primes/ten").
-			then().
-			  contentType(ContentType.JSON).
-			  statusCode(400).
-			and().
-			  body("error", equalTo("Bad Request")).
-			  body("message", equalTo("Bad Request"));
+	@Test
+	public void returnsErrorForInvalidLimit() {
+		when().
+		  get("/primes/ten").
+		then().
+		  contentType(ContentType.JSON).
+		  statusCode(400).
+		and().
+		  body("error", equalTo("Bad Request")).
+		  body("message", equalTo("Bad Request"));
 			  
 			
 		}
 		
        /* Testing response for maximum limit plus 1 */
 		
-		@Test
-		public void returnsErrorForexceedingMaximumLimit() {
-			when().
-			  get("/primes/2147483648").
-			then().
-			  contentType(ContentType.JSON).
-			  statusCode(400).
-			and().
-			  body("error", equalTo("Bad Request")).
-			  body("message", equalTo("Bad Request"));
+    @Test
+	public void returnsErrorForexceedingMaximumLimit() {
+		when().
+		  get("/primes/2147483648").
+		then().
+		  contentType(ContentType.JSON).
+		  statusCode(400).
+		and().
+		  body("error", equalTo("Bad Request")).
+		  body("message", equalTo("Bad Request"));
 			  
 			
 		}   
 		
 						
-    
-		
-		
  }
