@@ -488,6 +488,41 @@ public class PrimesEndPointShould {
 
 	}
 	
+	/* Testing the response when media Type is xml and header as json */
+
+	@Test
+	public void returnsPrimeNumbersForMediaTypeAsXmlHeaderAsJson() {
+		given().
+		  header("Accept", "application/json").
+		  param("mediaType", "xml").
+		when().
+		  get("/primes/25").
+		then().
+		  spec(xmlResponseSpec).
+		and().
+		  body("prime-response.limit", equalTo("25")).
+		  body("prime-response.primes.prime", hasItems("2", "3", "5", "7", "11", "13", "17", "19", "23"));
+
+	}
+	
+	/* Testing the response when media Type is json and header as xml */
+
+	@Test
+	public void returnsPrimeNumbersForMediaTypeAsJsonHeaderAsXml() {
+		given().
+		  header("Accept", "application/xml").
+		  param("mediaType", "json").
+		when().
+		  get("/primes/25.json").
+		then().
+		  spec(jsonResponseSpec).
+		and().
+		  body("primes", hasSize(9)).
+		  body("limit", equalTo(25)).
+		  body("primes", hasItems(2, 3, 5, 7, 11, 13, 17, 19, 23));
+
+	}
+	
 	/* Testing for some big responses 10000 */
 	
 	@Test
