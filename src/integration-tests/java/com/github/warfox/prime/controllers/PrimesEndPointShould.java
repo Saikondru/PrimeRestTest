@@ -2,60 +2,13 @@ package com.github.warfox.prime.controllers;
 
 import static io.restassured.RestAssured.*;
 import static org.hamcrest.Matchers.*;
-import org.junit.BeforeClass;
 import org.junit.Test;
-import io.restassured.RestAssured;
-import io.restassured.builder.ResponseSpecBuilder;
 import io.restassured.http.ContentType;
-import io.restassured.specification.ResponseSpecification;
 
-public class PrimesEndPointShould {
-	
-	public static ResponseSpecBuilder builder;
-	public static ResponseSpecification jsonResponseSpec;
-	public static ResponseSpecification xmlResponseSpec;
+public class PrimesEndPointShould extends Specifications {
+
 	public static final String xml25response = "23571113171923";
 	public static final String json25response = "[2, 3, 5, 7, 11, 13, 17, 19, 23]";
-	
-	/* Setting the base uri as local host */
-	
-    @BeforeClass
-	public static void setBaseUri () {
-
-    	RestAssured.baseURI = "http://localhost:8080";
-	  }
-	
-	/* For Code re usability to check json content type, Cache control header and status code */
-	
-	@BeforeClass
-    public static void setupJSONResponseSpecBuilder()
-    {
-        builder = new ResponseSpecBuilder();
-        
-        builder.expectStatusCode(200);
-        
-        builder.expectHeader("Cache-Control", "max-age=31536000");
-        
-        builder.expectContentType(ContentType.JSON);
-        
-        jsonResponseSpec = builder.build();
-    }
-	
-  /* For Code re usability to check xml content type, Cache control header and status code */
-	
-	@BeforeClass
-    public static void setupXMLResponseSpecBuilder()
-    {
-        builder = new ResponseSpecBuilder();
-        
-        builder.expectStatusCode(200);
-        
-        builder.expectHeader("Cache-Control", "max-age=31536000");
-        
-        builder.expectContentType(ContentType.XML);
-        
-        xmlResponseSpec = builder.build();
-    }
 	
 	/*  Testing the default limit as 10  */
 
