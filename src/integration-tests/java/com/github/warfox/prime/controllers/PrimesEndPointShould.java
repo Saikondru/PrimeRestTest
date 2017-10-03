@@ -14,6 +14,8 @@ public class PrimesEndPointShould {
 	public static ResponseSpecBuilder builder;
 	public static ResponseSpecification jsonResponseSpec;
 	public static ResponseSpecification xmlResponseSpec;
+	public static final String xml25response = "23571113171923";
+	public static final String json25response = "[2, 3, 5, 7, 11, 13, 17, 19, 23]";
 	
 	/* Setting the base uri as local host */
 	
@@ -456,7 +458,7 @@ public class PrimesEndPointShould {
 	}
 	
 	/* Testing the response when media Type is json and path extension as xml */
-
+		
 	@Test
 	public void returnsPrimeNumbersForMediaTypeAsJsonPathAsXml() {
 		given().
@@ -467,8 +469,8 @@ public class PrimesEndPointShould {
 		  spec(xmlResponseSpec).
 		and().
 		  body("prime-response.limit", equalTo("25")).
-		  body("prime-response.primes.prime", hasItems("2", "3", "5", "7", "11", "13", "17", "19", "23"));
-
+		  body("prime-response.primes.prime", hasToString(xml25response));
+				
 	}
 	
 	/* Testing the response when media Type is xml and path extension as json */
@@ -484,12 +486,12 @@ public class PrimesEndPointShould {
 		and().
 		  body("primes", hasSize(9)).
 		  body("limit", equalTo(25)).
-		  body("primes", hasItems(2, 3, 5, 7, 11, 13, 17, 19, 23));
+		  body("primes", hasToString(json25response));
 
 	}
 	
 	/* Testing the response when media Type is xml and header as json */
-
+	
 	@Test
 	public void returnsPrimeNumbersForMediaTypeAsXmlHeaderAsJson() {
 		given().
@@ -501,7 +503,7 @@ public class PrimesEndPointShould {
 		  spec(xmlResponseSpec).
 		and().
 		  body("prime-response.limit", equalTo("25")).
-		  body("prime-response.primes.prime", hasItems("2", "3", "5", "7", "11", "13", "17", "19", "23"));
+		  body("prime-response.primes.prime", hasToString(xml25response));
 
 	}
 	
@@ -519,7 +521,7 @@ public class PrimesEndPointShould {
 		and().
 		  body("primes", hasSize(9)).
 		  body("limit", equalTo(25)).
-		  body("primes", hasItems(2, 3, 5, 7, 11, 13, 17, 19, 23));
+		  body("primes", hasToString(json25response));
 
 	}
 	
@@ -536,7 +538,7 @@ public class PrimesEndPointShould {
 		  spec(xmlResponseSpec).
 		and().
 		  body("prime-response.limit", equalTo("25")).
-		  body("prime-response.primes.prime", hasItems("2", "3", "5", "7", "11", "13", "17", "19", "23"));
+		  body("prime-response.primes.prime", hasToString(xml25response));
 
 	}
 	
@@ -554,7 +556,7 @@ public class PrimesEndPointShould {
 		and().
 		  body("primes", hasSize(9)).
 		  body("limit", equalTo(25)).
-		  body("primes", hasItems(2, 3, 5, 7, 11, 13, 17, 19, 23));
+		  body("primes", hasToString(json25response));
 
 	}
 	
