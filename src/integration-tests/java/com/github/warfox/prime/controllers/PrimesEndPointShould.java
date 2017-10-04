@@ -2,13 +2,60 @@ package com.github.warfox.prime.controllers;
 
 import static io.restassured.RestAssured.*;
 import static org.hamcrest.Matchers.*;
+import io.restassured.RestAssured;
+import io.restassured.builder.ResponseSpecBuilder;
+import org.junit.BeforeClass;
 import org.junit.Test;
+import io.restassured.specification.ResponseSpecification;
 import io.restassured.http.ContentType;
 
-public class PrimesEndPointShould extends Specifications {
+public class PrimesEndPointShould {
 
+	public static ResponseSpecBuilder builder;
+	public static ResponseSpecification jsonResponseSpec;
+	public static ResponseSpecification xmlResponseSpec;
 	public static final String xml25response = "23571113171923";
 	public static final String json25response = "[2, 3, 5, 7, 11, 13, 17, 19, 23]";
+	
+    /* Setting the base uri as local host */
+	
+    @BeforeClass
+	public static void setBaseUri () {
+
+    	RestAssured.baseURI = "http://localhost:8080";
+	  }
+	
+    /* For Code re usability to check json content type, Cache control header and status code */
+	
+	@BeforeClass
+    public static void setupJSONResponseSpecBuilder()
+    {
+        builder = new ResponseSpecBuilder();
+        
+        builder.expectStatusCode(200);
+        
+        builder.expectHeader("Cache-Control", "max-age=31536000");
+        
+        builder.expectContentType(ContentType.JSON);
+        
+        jsonResponseSpec = builder.build();
+    }
+	
+    /* For Code re usability to check xml content type, Cache control header and status code */
+	
+	@BeforeClass
+    public static void setupXMLResponseSpecBuilder()
+    {
+        builder = new ResponseSpecBuilder();
+        
+        builder.expectStatusCode(200);
+        
+        builder.expectHeader("Cache-Control", "max-age=31536000");
+        
+        builder.expectContentType(ContentType.XML);
+        
+        xmlResponseSpec = builder.build();
+    }
 	
 	/*  Testing the default limit as 10  */
 
@@ -41,7 +88,7 @@ public class PrimesEndPointShould extends Specifications {
 
 	}
 	
-	/*  Testing the response for one prime number with in the limit  */
+	/*  Testing the response for the only even prime number within the limit  */
 
 	@Test
 	public void returnsOnePrimeNumber() {
@@ -56,7 +103,7 @@ public class PrimesEndPointShould extends Specifications {
 
 	}
 	
-	/*  Testing the response for no prime number with in the limit */
+	/*  Testing the response for no prime number within the limit */
 
 	@Test
 	public void returnsNoNumber() {
@@ -84,7 +131,7 @@ public class PrimesEndPointShould extends Specifications {
 		  
 	}
 	
-	/*  Testing the default content type with limit as 20 */
+	/*  Testing the default content type with 20 as limit */
 
 	@Test
 	public void returnsPrimeNumbersInJSONByDefaultWithLimit() {
@@ -99,7 +146,7 @@ public class PrimesEndPointShould extends Specifications {
 
 	}
 	
-	/*  Testing the response with header as JSON  */
+	/*  Testing the response with header as json  */
 
 	@Test
 	public void returnsPrimeNumbersInJsonForJsonHeader() {
@@ -116,7 +163,7 @@ public class PrimesEndPointShould extends Specifications {
 
 	}
 	
-	/*  Testing the response with header as XML  */
+	/*  Testing the response with header as xml  */
 
 	@Test
 	public void returnsPrimeNumbersInXMLForXMLHeader() {
@@ -194,7 +241,7 @@ public class PrimesEndPointShould extends Specifications {
 
 	}
 	
-	/* Testing Etag header in the default response which is json */
+	/* Testing Etag header in the default response(json) */
 	
 	@Test
 	public void returnsPrimeNumbersAndDefaultResponseWithHeadersEtag() {
@@ -210,8 +257,8 @@ public class PrimesEndPointShould extends Specifications {
 	      
 	}
 	
-	/* Testing Etag header in the response with request header as json and limit */
-	/* Here I am also checking whether Etag is changed compared to the previous request */
+	/* Testing Etag header in the response with request header as json and with a limit */
+	/* Here I am also checking whether Etag has changed compared to the previous request */
 	
 	@Test
 	public void returnsPrimeNumbersAndJsonResponseWithHeaderEtag() {
@@ -231,7 +278,7 @@ public class PrimesEndPointShould extends Specifications {
 	}
 	
 	/* Testing Etag header in the response with request header as xml */
-	/* Here I am passing the same limit but the content type as xml to check whether Etag is changed compared to the previous request */
+	/* Here I am passing the same limit but the content type as xml to check whether Etag has changed compared to the previous request */
 	
 	@Test
 	public void returnsPrimeNumbersAndXmlResponseWithHeaderEtag() {
@@ -248,7 +295,7 @@ public class PrimesEndPointShould extends Specifications {
 	      
 	}
 	
-	/* Test to check the header Content Length for default response  */
+	/* Test to check the header Content Length for default response(json)  */
 	
 	@Test
 	public void returnsPrimeNumbersAndJsonResponseWithHeaderContentLength() {
@@ -263,7 +310,7 @@ public class PrimesEndPointShould extends Specifications {
 		  body("primes", hasItems(2, 3, 5, 7));
 	}
 	
-   /* Test to check the header Content Length for xml response  */
+    /* Test to check the header Content Length for xml response  */
 	/* Here I am also checking whether the content length is different for content type xml with same limit as json */
 	
 	@Test
@@ -280,7 +327,7 @@ public class PrimesEndPointShould extends Specifications {
 		  body("prime-response.primes.prime", hasItems("2", "3", "5", "7"));
 	}
 	
-   /* Test to check the header content length when limit is given for json  */
+    /* Test to check the header content length with a limit, for a json response  */
 	
 	@Test
 	public void returnsPrimeNumbersAndJsonResponseWithHeaderContentLengthForLimit() {
@@ -295,7 +342,7 @@ public class PrimesEndPointShould extends Specifications {
 		  body("primes", hasItems(2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59));
 	}
 	
-   /* Test to check the header content length when limit is given for xml  */
+	/* Test to check the header content length with a limit, for a xml response  */
 	
 	@Test
 	public void returnsPrimeNumbersAndXmlResponseWithHeaderContentLengthForLimit() {
@@ -327,7 +374,7 @@ public class PrimesEndPointShould extends Specifications {
 
 	}
     
-   /* Testing response with invalid path parameter for limit  */
+    /* Testing response with invalid path parameter with a limit  */
     
     @Test
 	public void returnsPrimeNumbersInJsonForInvalidExtensionwithLimit() {
@@ -341,9 +388,11 @@ public class PrimesEndPointShould extends Specifications {
 		  body("primes", hasItems(2, 3, 5, 7, 11, 13));
 
 	}
+    
+    /* Assuming 3 seconds as good response time */
 	
-    /* Testing performance with in 3 seconds for json */
-	
+    /* Testing performance within 3 seconds for json */
+    	
 	@Test
 	public void returnsPrimeNumbersWithinGoodTimeForJson() {
 		given().
@@ -360,7 +409,7 @@ public class PrimesEndPointShould extends Specifications {
 		  
 	}
 	
-   /* Testing performance with in 3 seconds for xml */
+    /* Testing performance within 3 seconds for xml */
 	
 	@Test
 	public void returnsPrimeNumbersWithinGoodTimeForXml() {
@@ -377,7 +426,7 @@ public class PrimesEndPointShould extends Specifications {
 		  
 	}
 	
-	/* Testing the response when content types of header as json and path extension as xml given */
+	/* Testing the response when the header is json and path extension is xml */
 
 	@Test
 	public void returnsPrimeNumbersForHeaderAsJsonAndPathAsXml() {
@@ -393,7 +442,7 @@ public class PrimesEndPointShould extends Specifications {
 
 	}
 	
-	/* Testing the response when content types of header as xml and path extension as json is given */
+	/* Testing the response when the header is xml and path extension is json */
 
 	@Test
 	public void returnsPrimeNumbersForHeaderAsXmlAndPathAsJson() {
@@ -410,7 +459,7 @@ public class PrimesEndPointShould extends Specifications {
 
 	}
 	
-	/* Testing the response when media Type is json and path extension as xml */
+	/* Testing the response when media Type is json and path extension is xml */
 		
 	@Test
 	public void returnsPrimeNumbersForMediaTypeAsJsonPathAsXml() {
@@ -426,7 +475,7 @@ public class PrimesEndPointShould extends Specifications {
 				
 	}
 	
-	/* Testing the response when media Type is xml and path extension as json */
+	/* Testing the response when media Type is xml and path extension is json */
 
 	@Test
 	public void returnsPrimeNumbersForMediaTypeAsXmlPathAsJson() {
@@ -443,7 +492,7 @@ public class PrimesEndPointShould extends Specifications {
 
 	}
 	
-	/* Testing the response when media Type is xml and header as json */
+	/* Testing the response when media Type is xml and header is json */
 	
 	@Test
 	public void returnsPrimeNumbersForMediaTypeAsXmlHeaderAsJson() {
@@ -460,13 +509,13 @@ public class PrimesEndPointShould extends Specifications {
 
 	}
 	
-	/* Testing the response when media Type is json and header as xml */
+	/* Testing the response when media Type is xml, header is xml and path extension is json */ 
 
 	@Test
 	public void returnsPrimeNumbersForMediaTypeAsJsonHeaderAsXml() {
 		given().
 		  header("Accept", "application/xml").
-		  param("mediaType", "json").
+		  param("mediaType", "xml").
 		when().
 		  get("/primes/25.json").
 		then().
@@ -478,7 +527,7 @@ public class PrimesEndPointShould extends Specifications {
 
 	}
 	
-	/* Testing the response when media Type as json,header as json and Path extension as xml */
+	/* Testing the response when media Type is json, header is json and Path extension is xml */
 
 	@Test
 	public void returnsPrimeNumbersForMediaTypeAsJsonHeaderAsJsonParamXml() {
@@ -495,7 +544,7 @@ public class PrimesEndPointShould extends Specifications {
 
 	}
 	
-	/* Testing the response when media Type as xml,header as xml and Path extension as json */
+	/* Testing the response when media Type is xml, header is xml and Path extension is json */
 
 	@Test
 	public void returnsPrimeNumbersForMediaTypeAsXmlHeaderAsXmlParamJson() {
@@ -513,7 +562,7 @@ public class PrimesEndPointShould extends Specifications {
 
 	}
 	
-	/* Testing for some big responses 10000 */
+	/* Testing response for limit of 10000 */
 	
 	@Test
 	public void returnBigResponseTenThousand() {
@@ -524,7 +573,7 @@ public class PrimesEndPointShould extends Specifications {
 					
 	}
 	
-   /* Testing for some big responses 20000 */
+	/* Testing response for limit of 20000 */
 	
 	@Test
 	public void returnBigResponseTwentyThousand() {
@@ -549,7 +598,7 @@ public class PrimesEndPointShould extends Specifications {
 				
 	}   
 	
-	/* Negative Scenarios as follows */
+	/***********     Negative Scenarios as follows     **********/
 	
 	/* Testing response with invalid header */
 	
@@ -566,7 +615,7 @@ public class PrimesEndPointShould extends Specifications {
 						  
 		}
 	    
-	 /* Testing response with invalid media type */
+	/* Testing response with invalid media type */
 		
     @Test
 	public void returnsErrorForInvalidMediaType() {
@@ -586,10 +635,10 @@ public class PrimesEndPointShould extends Specifications {
 			
 		}
 		
-    /* Testing response with invalid limit as ten instead of 10 */
+    /* Testing response with string rather than integer 10 */
 		
 	@Test
-	public void returnsErrorForInvalidLimit() {
+	public void returnsErrorForStringLimit() {
 		when().
 		  get("/primes/ten").
 		then().
@@ -601,8 +650,40 @@ public class PrimesEndPointShould extends Specifications {
 			  
 			
 		}
+	
+	/* Testing response with combination of integer and string  */
+	
+	@Test
+	public void returnsErrorForIntegerStringLimit() {
+		when().
+		  get("/primes/10ten").
+		then().
+		  contentType(ContentType.JSON).
+		  statusCode(400).
+		and().
+		  body("error", equalTo("Bad Request")).
+		  body("message", equalTo("Bad Request"));
+			  
+			
+		}
+	
+    /* Testing response with combination of string and integer  */
+	
+	@Test
+	public void returnsErrorForStringIntegerLimit() {
+		when().
+		  get("/primes/ten10").
+		then().
+		  contentType(ContentType.JSON).
+		  statusCode(400).
+		and().
+		  body("error", equalTo("Bad Request")).
+		  body("message", equalTo("Bad Request"));
+			  
+			
+		}
 		
-       /* Testing response for maximum limit plus 1 */
+    /* Testing response for maximum limit plus 1 */
 		
     @Test
 	public void returnsErrorForexceedingMaximumLimit() {
