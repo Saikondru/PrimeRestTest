@@ -2,12 +2,18 @@ package com.github.warfox.prime.controllers;
 
 import static io.restassured.RestAssured.*;
 import static org.hamcrest.Matchers.*;
+import static org.junit.Assert.*;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.TimeZone;
+
 import io.restassured.RestAssured;
 import io.restassured.builder.ResponseSpecBuilder;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import io.restassured.specification.ResponseSpecification;
 import io.restassured.http.ContentType;
+import io.restassured.response.Response;
 
 public class PrimesEndPointShould {
 
@@ -35,7 +41,7 @@ public class PrimesEndPointShould {
         builder.expectStatusCode(200);
         
         builder.expectHeader("Cache-Control", "max-age=31536000");
-        
+         
         builder.expectContentType(ContentType.JSON);
         
         jsonResponseSpec = builder.build();
@@ -131,6 +137,79 @@ public class PrimesEndPointShould {
 		  
 	}
 	
+	/*  Testing the response for no prime number with negative number 10 as limit */
+
+	@Test
+	public void returnsNoNumberForLimitAsNagativeInteger10() {
+		when().
+		  get("/primes/-10").
+		then().
+		  spec(jsonResponseSpec).
+		and().
+		  body("limit", equalTo(-10)).
+		  body("primes", hasSize(0));
+		  
+	}
+	
+	/*  Testing the response for no prime number with decimal as limit */
+
+	@Test
+	public void returnsNoNumberForLimitAsDecimal() {
+		when().
+		  get("/primes/0.9").
+		then().
+		  spec(jsonResponseSpec).
+		and().
+		  body("limit", equalTo(0)).
+		  body("primes", hasSize(0));
+		  
+	}
+	
+	/*  Testing the response for limit as decimal 10.89 for xml */
+
+	@Test
+	public void returnsPrimeNumbersBelow10ForDecmal10ForXml() {
+		given().
+		  header("Accept", "application/xml").
+		when().
+		  get("/primes/10.89").
+		then().
+		  spec(xmlResponseSpec).
+		and().
+		 body("prime-response.limit", equalTo("10")).
+		 body("prime-response.primes.prime", hasItems("2", "3", "5", "7"));
+
+	}
+	
+	/*  Testing the response for prime number with Hex 0x3B0 which is 59 as limit */
+
+	@Test
+	public void returnsPrimeNumbersForLimitAsHex59() {
+		when().
+		  get("/primes/0x3B").
+		then().
+		  spec(jsonResponseSpec).
+		and().
+		  body("limit", equalTo(59)).
+		  body("primes", hasSize(17)).
+		  body("primes", hasItems(2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59));
+		  
+	}
+	
+	/*  Testing the response for prime number with Hex 0x3B0 which is 59 as limit and content type xml */
+
+	@Test
+	public void returnsPrimeNumbersForLimitAsHex59ContentTypeXml() {
+		when().
+		  get("/primes/0x3B.xml").
+		then().
+		  spec(xmlResponseSpec).
+		and().
+		  body("prime-response.limit", equalTo("59")).
+		  body("prime-response.primes.prime", hasItems("2", "3", "5", "7", "11", "13", "17", "19", "23", "29", "31", "37", "41", "43", "47", "53", "59"));
+		  
+	}
+		
 	/*  Testing the default content type with 20 as limit */
 
 	@Test
@@ -584,6 +663,21 @@ public class PrimesEndPointShould {
 					
 	}
 	
+    /* Testing response for date header as todays date */
+	
+    @Test
+	public void returnsDate() {
+		Date now = new Date();
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/YYYY");
+		sdf = new SimpleDateFormat("EEE, dd MMM yyyy");
+		sdf.setTimeZone(TimeZone.getTimeZone("GMT"));
+		Response response = when().get("/primes");
+		String date = response.getHeader("Date");
+		assertTrue(date.contains(sdf.format(now)));
+	
+				
+	}
+	
 	/* Testing response for maximum limit */
 	
 	/* This test is commented as it will timeout and abort */
@@ -698,6 +792,6 @@ public class PrimesEndPointShould {
 			  
 			
 		}   
-		
-						
+
+  
  }

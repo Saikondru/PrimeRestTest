@@ -76,5 +76,7 @@ dependencies {
     compile group: 'io.rest-assured', name: 'json-path', version: '3.0.3'
     compile group: 'io.rest-assured', name: 'json-schema-validator', version: '3.0.3'
     compile group: 'io.rest-assured', name: 'xml-path', version: '3.0.3'
+      
+    
     }
 }
